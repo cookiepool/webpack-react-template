@@ -1,35 +1,24 @@
 {
-  "name": "customized-react-proj-mobile",
+  "name": "webpack-react-template",
   "version": "1.0.0",
-  "description": "react mobile project",
-  "main": "index.js",
+  "description": "react template",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack-dev-server --config ./build/webpack.dev.js --progress --colors",
     "build": "webpack --config ./build/webpack.prod.js --progress"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/cookiepool/customized-react-proj-mobile.git"
-  },
   "keywords": [
-    "react",
-    "react mobile"
+    "react"
   ],
   "author": "LEE",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/cookiepool/customized-react-proj-mobile/issues"
-  },
-  "homepage": "https://github.com/cookiepool/customized-react-proj-mobile#readme",
   "devDependencies": {
-    "@babel/core": "^7.8.4",
-    "@babel/preset-env": "^7.8.4",
-    "@babel/preset-react": "^7.8.3",
+    "@babel/core": "^7.14.6",
+    "@babel/preset-env": "^7.14.7",
+    "@babel/preset-react": "^7.14.5",
     "@intervolga/optimize-cssnano-plugin": "^1.0.6",
-    "babel-loader": "^8.0.6",
+    "babel-loader": "^8.2.2",
     "clean-webpack-plugin": "^3.0.0",
-    "copy-webpack-plugin": "^5.1.1",
+    "copy-webpack-plugin": "^5.1.2",
     "css-loader": "^3.4.2",
     "dart-sass": "^1.25.0",
     "file-loader": "^5.0.2",
