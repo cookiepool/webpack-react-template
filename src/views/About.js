@@ -8,9 +8,7 @@ class About extends React.Component {
   }
 
   render() {
-    return (
-      <h2 className={ styles['about-text'] }>This is about page</h2>
-    )
+    return <h2 className={styles['about-text']}>This is about page</h2>;
   }
 }
 

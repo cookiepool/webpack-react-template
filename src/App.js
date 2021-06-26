@@ -11,22 +11,26 @@ class App extends React.Component {
   }
 
   render() {
-    return(
+    return (
       <Router>
-        <div className={ styles.container }>
-          <div className={ styles['title-wraper'] }>
-            <Link to="/"><span className={ styles['link-title'] }>Home</span></Link>
-            <span className={ styles['link-line']}> | </span>
-            <Link to="/about"><span className={ styles['link-title'] }>About</span></Link>
+        <div className={styles.container}>
+          <div className={styles['title-wraper']}>
+            <Link to="/">
+              <span className={styles['link-title']}>Home</span>
+            </Link>
+            <span className={styles['link-line']}> | </span>
+            <Link to="/about">
+              <span className={styles['link-title']}>About</span>
+            </Link>
           </div>
-            <Switch>
-              <React.Suspense fallback={ <Loading></Loading> }>
-                { renderRoutes(routes) } 
-              </React.Suspense>
-            </Switch>
+          <Switch>
+            <React.Suspense fallback={<Loading></Loading>}>
+              {renderRoutes(routes)}
+            </React.Suspense>
+          </Switch>
         </div>
       </Router>
-    )
+    );
   }
 }
 

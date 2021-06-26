@@ -8,9 +8,7 @@ class Home extends React.Component {
   }
 
   render() {
-    return (
-      <HelloReact></HelloReact>
-    )
+    return <HelloReact></HelloReact>;
   }
 }
 
