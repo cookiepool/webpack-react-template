@@ -31,6 +31,22 @@ module.exports = webpackMerge(webpackCommonConfig, {
         ]
       },
       {
+        test: /\.css$/,
+        use: [
+          {
+            loader: 'style-loader'
+          },
+          {
+            loader: 'css-loader',
+            options: {
+              modules: {
+                localIdentName: '[name]__[local]--[hash:base64:5]'
+              }
+            }
+          }
+        ]
+      },
+      {
         enforce: 'pre',
         test: /\.(js|vue)$/,
         loader: 'eslint-loader',

@@ -73,3 +73,12 @@ code {
   text-align: center;
   color: #fff;
 }
+
+:global .about-wraper {
+  color: red;
+}
+
+.about-h3-text {
+  text-align: center;
+  font-size: 60px;
+}
