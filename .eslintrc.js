@@ -1,7 +1,8 @@
 module.exports = {
   root: true,
   env: {
-    node: true
+    node: true,
+    browser: true
   },
   plugins: ['react', 'prettier'],
   extends: [
@@ -10,11 +11,8 @@ module.exports = {
     'plugin:react-hooks/recommended',
     'plugin:prettier/recommended'
   ],
-  globals: {
-    document: 'readonly'
-  },
+  parser: 'babel-eslint',
   parserOptions: {
-    parser: 'babel-eslint',
     sourceType: 'module',
     ecmaVersion: 2020
   },
