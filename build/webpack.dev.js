@@ -2,10 +2,11 @@ const webpack = require('webpack');
 const webpackMerge = require('webpack-merge');
 const webpackCommonConfig = require('./webpack.config.js');
 const friendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
+const path = require('path');
 
 module.exports = webpackMerge(webpackCommonConfig, {
   mode: 'development',
-  devtool: "#@cheap-eval-source-map",
+  devtool: "cheap-module-eval-source-map",
   module: {
     rules: [
       {
@@ -40,7 +41,8 @@ module.exports = webpackMerge(webpackCommonConfig, {
             loader: 'css-loader',
             options: {
               modules: {
-                localIdentName: '[name]__[local]--[hash:base64:5]'
+                localIdentName: '[name]__[local]--[hash:base64:5]',
+                auto: /\.redux-study\.\w+$/i
               }
             }
           }

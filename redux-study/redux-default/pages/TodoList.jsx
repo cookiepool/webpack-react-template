@@ -1,22 +1,19 @@
 import React, { Component } from 'react';
 
-import { Input, Button, List } from 'antd';
-import 'antd/dist/antd.css';
+import { Input, Button, List, Divider } from 'antd';
 
-import store from '../../store/index';
+import store from '../store/index';
 import {
   changeInputAction,
   addNewItemAction,
   deleteItemAction
-} from '../../store/actionCreatores';
+} from '../store/actionCreatores';
 
 class TodoList extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      name: 'da'
-    };
-    this.state = store.getState();
+    console.log(store.getState());
+    this.state = { name: 'haha', ...store.getState() };
 
     // 订阅变化
     // this.storeChange = this.storeChange.bind(this); // 这里必须bind，不然提示没有this，而且必须写在下面这句之前
@@ -28,8 +25,6 @@ class TodoList extends Component {
   }
 
   handleChange(e) {
-    console.log(e.target.value);
-    // 通知redux
     const action = changeInputAction(e.target.value);
     store.dispatch(action);
   }
@@ -47,8 +42,20 @@ class TodoList extends Component {
   };
 
   render() {
+    const { name } = this.state;
+
     return (
       <div>
+        <h3>{name}</h3>
+        <Button
+          type="primary"
+          onClick={() => {
+            this.setState({ name: 'yaya' });
+          }}
+        >
+          修改名字
+        </Button>
+        <Divider />
         <Input
           onChange={this.handleChange}
           placeholder={this.state.inputValue}

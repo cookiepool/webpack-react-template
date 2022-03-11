@@ -5,7 +5,11 @@ const copyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: {
-    index: path.resolve(__dirname, '../src/index.jsx')
+    // index: path.resolve(__dirname, '../src/index.jsx')
+    // index: path.resolve(__dirname, '../redux-study/redux-default/index.jsx')
+    // index: path.resolve(__dirname, '../redux-study/react-redux/index.jsx')
+    // index: path.resolve(__dirname, '../redux-study/redux-thunk/index.jsx')
+    index: path.resolve(__dirname, '../redux-study/redux-saga/index.jsx')
   },
   output: {
     path: path.resolve(__dirname, '../dist'),
