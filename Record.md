@@ -5,7 +5,6 @@ Vue的时候我们安装的是Vue相关的东西，使用React的话就需要Rea
 ```
 npm react react-dom react-router-dom -S
 ```
-暂时不引入状态管理Redux。
 
 # babel.config.js
 babel主要是安装多了个@babel/preset-react，这个用来转换jsx。
@@ -141,3 +140,56 @@ render() {
 ```
 <div className={styles['all-wraper'] + ' flex-all-center'}>
 ```
+
+# Webpack 5配置补充
+1、图片跟字体资源使用webpack自带的功能，不再使用url-loader和file-loader，去除音频文件的加载。
+```
+assetModuleFilename: 'assets/[name].[hash][ext][query]'
+
+{
+  test: /\.(jpe?g|png|gif|svg)$/i,
+  type: 'asset/resource'
+},
+{
+  test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/i,
+  type: 'asset/resource'
+}
+```
+
+> [参考-资源模块](https://webpack.docschina.org/guides/asset-modules/)
+
+2、样式对应的dart-sass升级为sass。
+
+3、关于eslint-loader，官方建议使用eslint-webpack-plugin，eslint-loader已不再维护。
+
+4、NamedModulesPlugin替换为optimization.moduleIds: 'named'；这个功能主要是在热重载时直接返回更新文件名，而不是文件的id。
+
+5、webpack-merge的引入方式变为：const { merge } = require('webpack-merge');
+
+6、copy-webpack-plugin的配置方式变为：
+```
+plugins: [
+  new copyWebpackPlugin({
+    patterns: [{
+      from: path.resolve(__dirname, '../public'),
+      to: path.resolve(__dirname, '../dist')
+    }]
+  })
+]
+```
+
+7、webpack的devtool选项的值有次序要求，应匹配为：^(inline-|hidden-|eval-)?(nosources-)?(cheap-(module-)?)?source-map$
+
+8、devServer的quiet, contentBase字段废弃
+
+9、devServer的clientLogLevel字段相关配置收拢到client里面配置
+
+10、index.html从public移入根目录，否则会报 `Multiple assets emit different content to the same filename index.html`
+
+11、webpack-devserver升级到4.x后，开启热更新后可以不再配置webpack.HotModuleReplacementPlugin
+
+12、移除friendly-errors-webpack-plugin插件，对webpack 5支持不好
+
+13、@intervolga/optimize-cssnano-plugin替换为css-minimizer-webpack-plugin，用于CSS压缩，@intervolga/optimize-cssnano-plugin早已停止更新。
+
+14、使用fullhash代替hash关键词

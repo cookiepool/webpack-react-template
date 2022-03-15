@@ -1,15 +1,24 @@
 const webpack = require('webpack');
 const webpackCommonConfig = require('./webpack.config.js');
-const webpackMerge = require('webpack-merge');
+const { merge } = require('webpack-merge');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const webpackBundleAnalyzer = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const TerserPlugin = require('terser-webpack-plugin');
 const miniCSSExtractPlugin = require('mini-css-extract-plugin');
-const optimizeCssnanoPlugin = require('@intervolga/optimize-cssnano-plugin');
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
-module.exports = webpackMerge(webpackCommonConfig, {
+module.exports = merge(webpackCommonConfig, {
   mode: 'production',
-  devtool: 'none',
+  devtool: false,
   optimization: {
+    minimizer: [
+      new TerserPlugin({
+        parallel: true
+      }),
+      new CssMinimizerPlugin({
+        parallel: 4,
+      })
+    ],
     splitChunks: {
       cacheGroups: {
         // node_modules下的模块拆分到chunk-vendors.xxxx.js下
@@ -43,15 +52,12 @@ module.exports = webpackMerge(webpackCommonConfig, {
             loader: 'css-loader',
             options: {
               modules: {
-                localIdentName: '[name]__[local]--[hash:base64:5]'
+                localIdentName: '[name]__[local]--[fullhash:base64:5]'
               }
             }
           },
           {
-            loader: 'sass-loader',
-            options: {
-              implementation: require('dart-sass')
-            }
+            loader: 'sass-loader'
           }
         ]
       },
@@ -65,7 +71,8 @@ module.exports = webpackMerge(webpackCommonConfig, {
             loader: 'css-loader',
             options: {
               modules: {
-                localIdentName: '[name]__[local]--[hash:base64:5]'
+                localIdentName: '[name]__[local]--[fullhash:base64:5]',
+                auto: /\.redux-study\.\w+$/i
               }
             }
           }
@@ -79,18 +86,8 @@ module.exports = webpackMerge(webpackCommonConfig, {
       analyzerMode: 'static'
     }),
     new miniCSSExtractPlugin({
-      filename: 'css/[name].[hash:4].css',
-      chunkFilename: 'css/[name].[hash:4].css'
-    }),
-    new optimizeCssnanoPlugin({
-      sourceMap: true,
-      cssnanoOptions: {
-        preset: ['default', {
-          discardComments: {
-            removeAll: true,
-          }
-        }]
-      }
+      filename: 'css/[name].[contenthash:6].css',
+      chunkFilename: 'css/[name].[contenthash:6].css'
     })
   ]
 })

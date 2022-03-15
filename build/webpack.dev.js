@@ -1,12 +1,14 @@
 const webpack = require('webpack');
-const webpackMerge = require('webpack-merge');
+const { merge } = require('webpack-merge');
 const webpackCommonConfig = require('./webpack.config.js');
-const friendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 const path = require('path');
 
-module.exports = webpackMerge(webpackCommonConfig, {
+module.exports = merge(webpackCommonConfig, {
   mode: 'development',
-  devtool: "cheap-module-eval-source-map",
+  devtool: "eval-cheap-module-source-map", // webpack 5对这个字段组合有次序要求
+  optimization: {
+    moduleIds: 'named' // 替换NamedModulesPlugin
+  },
   module: {
     rules: [
       {
@@ -19,15 +21,12 @@ module.exports = webpackMerge(webpackCommonConfig, {
             loader: 'css-loader',
             options: {
               modules: {
-                localIdentName: '[name]__[local]--[hash:base64:5]'
+                localIdentName: '[name]__[local]--[fullhash:base64:5]'
               }
             }
           },
           {
-            loader: 'sass-loader',
-            options: {
-              implementation: require('dart-sass')
-            }
+            loader: 'sass-loader'
           }
         ]
       },
@@ -41,7 +40,7 @@ module.exports = webpackMerge(webpackCommonConfig, {
             loader: 'css-loader',
             options: {
               modules: {
-                localIdentName: '[name]__[local]--[hash:base64:5]',
+                localIdentName: '[name]__[local]--[fullhash:base64:5]',
                 auto: /\.redux-study\.\w+$/i
               }
             }
@@ -59,25 +58,20 @@ module.exports = webpackMerge(webpackCommonConfig, {
       }
     ]
   },
-  plugins: [
-    new webpack.NamedModulesPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
-    new friendlyErrorsWebpackPlugin({
-      compilationSuccessInfo: {
-        messages: [`Your application is running here: 127.0.0.1:9866`]
-      }
-    })
-  ],
+  plugins: [],
   devServer: {
-    host: '0.0.0.0',
+    host: 'local-ipv4',
+    open: false,
     hot: true,
     port: 9866,
-    contentBase: './dist',
-    clientLogLevel: 'error',
-    overlay: {
-      errors: true,
-      warnings: true
-    },
-    quiet: true
+    liveReload: false,
+    client: {
+      logging: 'info',
+      overlay: {
+        errors: true,
+        warnings: true
+      },
+      progress: true
+    }
   }
 })

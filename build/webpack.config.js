@@ -5,16 +5,17 @@ const copyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: {
-    // index: path.resolve(__dirname, '../src/index.jsx')
+    index: path.resolve(__dirname, '../src/index.jsx')
     // index: path.resolve(__dirname, '../redux-study/redux-default/index.jsx')
     // index: path.resolve(__dirname, '../redux-study/react-redux/index.jsx')
     // index: path.resolve(__dirname, '../redux-study/redux-thunk/index.jsx')
-    index: path.resolve(__dirname, '../redux-study/redux-saga/index.jsx')
+    // index: path.resolve(__dirname, '../redux-study/redux-saga/index.jsx')
   },
   output: {
     path: path.resolve(__dirname, '../dist'),
-    filename: 'js/[name].[hash:4].js',
-    chunkFilename: 'js/[name].[hash:4].js',
+    filename: 'js/[name].[fullhash:6].js',
+    chunkFilename: 'js/[name].[chunkhash:6].js',
+    assetModuleFilename: 'assets/[name].[hash][ext][query]',
     publicPath: '/' 
   },
   module: {
@@ -28,52 +29,26 @@ module.exports = {
       },
       {
         test: /\.(jpe?g|png|gif|svg)$/i,
-        use: [{
-          loader: 'url-loader',
-          options: {
-            limit: 5120,
-            esModule: false,
-            fallback: 'file-loader',
-            name: 'images/[name].[hash:4].[ext]'
-          }
-        }]
-      },
-      {
-        test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/i,
-        use: [{
-          loader: 'url-loader',
-          options: {
-            limit: 5120,
-            esModule: false,
-            fallback: 'file-loader',
-            name: 'media/[name].[hash:4].[ext]'
-          }
-        }]
+        type: 'asset/resource'
       },
       {
         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/i,
-        use: [{
-          loader: 'url-loader',
-          options: {
-            limit: 5120,
-            esModule: false,
-            fallback: 'file-loader',
-            name: 'fonts/[name].[hash:4].[ext]'
-          }
-        }]
+        type: 'asset/resource'
       }
     ]
   },
   plugins: [
     new htmlWebpackPlugin({
       title: 'React Template',
-      template: path.resolve(__dirname, '../public/index.html'),
+      template: path.resolve(__dirname, '../index.html'),
       filename: path.resolve(__dirname, '../dist/index.html')
     }),
-    new copyWebpackPlugin([{
-      from: path.resolve(__dirname, '../public'),
-      to: path.resolve(__dirname, '../dist')
-    }])
+    new copyWebpackPlugin({
+      patterns: [{
+        from: path.resolve(__dirname, '../public'),
+        to: path.resolve(__dirname, '../dist')
+      }]
+    })
   ],
   resolve: {
     alias: {

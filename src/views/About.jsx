@@ -5,6 +5,7 @@ import styles from '@/App.scss';
 class About extends React.Component {
   constructor(props) {
     super(props);
+    console.log(props);
   }
 
   render() {
