@@ -1,7 +1,7 @@
 const webpack = require('webpack');
 const { merge } = require('webpack-merge');
 const webpackCommonConfig = require('./webpack.config.js');
-const path = require('path');
+const ESlintPlugin = require('eslint-webpack-plugin');
 
 module.exports = merge(webpackCommonConfig, {
   mode: 'development',
@@ -46,19 +46,14 @@ module.exports = merge(webpackCommonConfig, {
             }
           }
         ]
-      },
-      {
-        enforce: 'pre',
-        test: /\.(js|vue)$/,
-        loader: 'eslint-loader',
-        exclude: /node_modules/,
-        options: {
-          formatter: require('eslint-friendly-formatter')
-        }
       }
     ]
   },
-  plugins: [],
+  plugins: [
+    new ESlintPlugin({
+      extensions: ['js', 'jsx']
+    })
+  ],
   devServer: {
     host: 'local-ipv4',
     open: false,
