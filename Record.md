@@ -142,7 +142,7 @@ render() {
 ```
 
 # Webpack 5配置补充
-1、图片跟字体资源使用webpack自带的功能，不再使用url-loader和file-loader，去除音频文件的加载。
+1、图片跟字体资源使用webpack自带的功能，不再使用url-loader和file-loader，同时去除音频文件的加载。
 ```
 assetModuleFilename: 'assets/[name].[hash][ext][query]'
 
@@ -184,7 +184,7 @@ plugins: [
 
 9、devServer的clientLogLevel字段相关配置收拢到client里面配置
 
-10、index.html从public移入根目录，否则会报 `Multiple assets emit different content to the same filename index.html`
+10、index.html从public移入根目录，否则会报 `Multiple assets emit different content to the same filename index.html`，这个原因是：新的devServer选项的static参数默认是public文件夹，会造成冲突，如果要解决的话需要把static设置为false。[参考链接](https://webpack.docschina.org/configuration/dev-server/#devserverstatic)
 
 11、webpack-devserver升级到4.x后，开启热更新后可以不再配置webpack.HotModuleReplacementPlugin
 

@@ -2,6 +2,25 @@ const webpack = require('webpack');
 const { merge } = require('webpack-merge');
 const webpackCommonConfig = require('./webpack.config.js');
 const ESlintPlugin = require('eslint-webpack-plugin');
+const FriendlyErrorsWebpackPlugin = require('@soda/friendly-errors-webpack-plugin');
+const WebpackDevServer = require('webpack-dev-server');
+
+const devserverOptions = {
+  static: false,
+  host: '0.0.0.0',
+  open: false,
+  hot: true,
+  port: 9866,
+  liveReload: false,
+  client: {
+    logging: 'error',
+    overlay: {
+      errors: true,
+      warnings: true
+    },
+    progress: true
+  }
+}
 
 module.exports = merge(webpackCommonConfig, {
   mode: 'development',
@@ -9,6 +28,7 @@ module.exports = merge(webpackCommonConfig, {
   optimization: {
     moduleIds: 'named' // 替换NamedModulesPlugin
   },
+  stats: 'errors-only',
   module: {
     rules: [
       {
@@ -52,21 +72,13 @@ module.exports = merge(webpackCommonConfig, {
   plugins: [
     new ESlintPlugin({
       extensions: ['js', 'jsx']
+    }),
+    new FriendlyErrorsWebpackPlugin({
+      compilationSuccessInfo: {
+        messages: [`Your application is running here http://localhost:${devserverOptions.port}`],
+        notes: ['Note that the development build is not optimized.', 'To create a production build, use npm run build']
+      }
     })
   ],
-  devServer: {
-    host: 'local-ipv4',
-    open: false,
-    hot: true,
-    port: 9866,
-    liveReload: false,
-    client: {
-      logging: 'info',
-      overlay: {
-        errors: true,
-        warnings: true
-      },
-      progress: true
-    }
-  }
+  devServer: devserverOptions
 })
