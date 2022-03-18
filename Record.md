@@ -188,8 +188,6 @@ plugins: [
 
 11、webpack-devserver升级到4.x后，开启热更新后可以不再配置webpack.HotModuleReplacementPlugin
 
-12、移除friendly-errors-webpack-plugin插件，对webpack 5支持不好
+12、@intervolga/optimize-cssnano-plugin替换为css-minimizer-webpack-plugin，用于CSS压缩，@intervolga/optimize-cssnano-plugin早已停止更新。
 
-13、@intervolga/optimize-cssnano-plugin替换为css-minimizer-webpack-plugin，用于CSS压缩，@intervolga/optimize-cssnano-plugin早已停止更新。
-
-14、使用fullhash代替hash关键词
+13、使用fullhash代替hash关键词
